@@ -21,3 +21,10 @@ import {
   Typography,
 } from "@mui/material";
 
+function classDashboard() {
+    return (
+        <h1>Classes Dashboard</h1>
+    )
+}
+
+export default classDashboard; 

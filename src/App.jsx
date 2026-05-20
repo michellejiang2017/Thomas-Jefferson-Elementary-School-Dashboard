@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Calendar from "./pages/calendar";
+import ClassesDashboard from "/pages/classes-dashboard";
 
 // after finishing each page, import it here with the same name as the function. 
 
