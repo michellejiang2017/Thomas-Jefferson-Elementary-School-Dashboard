@@ -6,6 +6,8 @@ PROJECT IMPORTANT LINKS:
 [Figma](https://www.figma.com/design/H01fmylbuYnE8nRHwLqUyH/Prototype?node-id=0-1&p=f&t=cXFtqqMYIOI15NrW-0)
 [Assignment](https://docs.google.com/document/d/1gml-NoWClnUK0jGIeiyvszhUjMWHRpm1NP747iAXUGg/edit?tab=t.0)
 [Update](https://docs.google.com/document/d/1_A9rPqOuOtgPjYJKakpcqLMkBRSRFfMGxye2IBfBAs0/edit?tab=t.0)
+[Database Outline](https://docs.google.com/document/d/15ad8HD34QovLUiZw_1FaOnD0MAqtDIXzgHqmT7rrnM0/edit?tab=t.0)
+[Presentation Slidedeck](https://canva.link/wavdos99stw5ji2)
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

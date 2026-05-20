@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Students from "./pages/students"
 import Calendar from "./pages/calendar";
 import ClassesDashboard from "/pages/classes-dashboard";
 
@@ -23,10 +24,6 @@ function EnglishHome() {
 
 function TeacherDashboard() {
   return <h1>Teacher Dashboard</h1>;
-}
-
-function Students() {
-  return <h1>Student Directory</h1>;
 }
 
 function Teachers() {
