@@ -2,16 +2,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Students from "./pages/students"
 import Calendar from "./pages/calendar";
-import ClassesDashboard from "/pages/classes-dashboard";
+import ClassesDashboard from "./pages/classes-dashboard";
 
 // after finishing each page, import it here with the same name as the function. 
 
 function Home() {
   return <h1>Home Page</h1>;
-}
-
-function ClassesDashboard() {
-  return <h1>Classes Dashboard</h1>;
 }
 
 function MathHome() {

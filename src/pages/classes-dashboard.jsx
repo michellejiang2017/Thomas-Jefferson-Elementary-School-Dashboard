@@ -21,10 +21,14 @@ import {
   Typography,
 } from "@mui/material";
 
-function classDashboard() {
-    return (
-        <h1>Classes Dashboard</h1>
-    )
+function ClassDashboard() {
+  return (
+    <Box sx={{ p: 4 }}>
+      <Typography variant="h3" fontWeight="bold">
+        Classes Dashboard
+      </Typography>
+    </Box>
+  );
 }
 
-export default classDashboard; 
+export default ClassDashboard;
