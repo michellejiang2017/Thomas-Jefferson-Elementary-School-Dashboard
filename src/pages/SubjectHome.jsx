@@ -2,13 +2,17 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { Box, Button, Card, CardContent, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Typography, IconButton } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import GradeEditorModal from "../components/GradeEditorModal";
 
-export default function MathHome() {
+export default function SubjectHome({ subject }) {
   const { classId } = useParams();
   const [classInfo, setClassInfo] = useState(null);
   const [teacher, setTeacher] = useState(null);
   const [roster, setRoster] = useState([]);
+  const [editingStudent, setEditingStudent] = useState(null);
+  const [gradeModalOpen, setGradeModalOpen] = useState(false);
 
   useEffect(() => {
     if (!classId) return;
@@ -55,6 +59,32 @@ export default function MathHome() {
     );
   }
 
+  const subjectLabel = subject.charAt(0).toUpperCase() + subject.slice(1);
+  const gradeField = `${subject}Grade`;
+
+  const handleEditGrade = (student) => {
+    setEditingStudent(student);
+    setGradeModalOpen(true);
+  };
+
+  const handleGradeSuccess = () => {
+    // Refresh roster after grade update
+    getDoc(doc(db, "classes", classId)).then(async (classDoc) => {
+      if (classDoc.exists()) {
+        const data = { id: classDoc.id, ...classDoc.data() };
+        setClassInfo(data);
+
+        const studentIds = data.studentIds || [];
+        const studentsSnapshot = await getDocs(collection(db, "students"));
+        const updatedRoster = studentsSnapshot.docs
+          .map((document) => ({ id: document.id, ...document.data() }))
+          .filter((student) => studentIds.includes(student.id));
+
+        setRoster(updatedRoster);
+      }
+    });
+  };
+
   return (
     <Box sx={{ p: 3, width: "100%" }}>
       <Button component={Link} to="/classes-dashboard" sx={{ mb: 2 }}>
@@ -62,7 +92,7 @@ export default function MathHome() {
       </Button>
 
       <Typography variant="h4" fontWeight="bold" gutterBottom>
-        {classInfo.name}
+        {classInfo.name} - {subjectLabel}
       </Typography>
 
       <Typography color="text.secondary">
@@ -88,16 +118,38 @@ export default function MathHome() {
         roster.map((student) => (
           <Card key={student.id} variant="outlined" sx={{ mb: 1 }}>
             <CardContent>
-              <Typography fontWeight="bold">
-                {student.firstName} {student.lastName}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Grade level: {student.gradeLevel ?? "—"}
-              </Typography>
+              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <Box>
+                  <Typography fontWeight="bold">
+                    {student.firstName} {student.lastName}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Grade level: {student.gradeLevel ?? "—"}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {subjectLabel} grade: {student[gradeField] ?? "—"}
+                  </Typography>
+                </Box>
+                <IconButton
+                  size="small"
+                  onClick={() => handleEditGrade(student)}
+                  sx={{ color: "#1f2937" }}
+                >
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              </Box>
             </CardContent>
           </Card>
         ))
       )}
+
+      <GradeEditorModal
+        open={gradeModalOpen}
+        onClose={() => setGradeModalOpen(false)}
+        student={editingStudent}
+        subject={subject}
+        onSuccess={handleGradeSuccess}
+      />
     </Box>
   );
 }
