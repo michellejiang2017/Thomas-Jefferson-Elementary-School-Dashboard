@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { addDoc, collection } from "firebase/firestore"
-import { db } from "../firebase/firebase" // will work once SE creates this
+import { db } from "../firebase"
 
 export default function AddStudentForm() {
     const [firstName, setFirstName] = useState("")
